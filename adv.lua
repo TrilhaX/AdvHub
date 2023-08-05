@@ -130,7 +130,39 @@ function autoClaim()
 end
 
 
+function autoSummon()
+    while getgenv().autoSummon == true do
+     local args = {
+         [1] = "EventClover",
+         [2] = "gems10"
+     }
+     
+     game:GetService("ReplicatedStorage").endpoints.client_to_server.buy_from_banner:InvokeServer(unpack(args))
+ end        
+ end
 
+
+ function autoTicket()
+    while getgenv().autoTicket == true do
+        local args = {
+            [1] = "summon_ticket313190",
+            [2] = "1"
+        }
+        
+        game:GetService("ReplicatedStorage").endpoints.client_to_server.buy_travelling_merchant_item:InvokeServer(unpack(args))
+         end 
+        end       
+
+        function autoDgAn()
+            while getgenv().autoDgAn == true do
+                wait()
+                local args = {
+                    [1] = "_lobbytemplate_event323"
+                }
+                
+                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args))
+            end
+        end
 
 
     local FarmTab = Window:MakeTab({
@@ -207,6 +239,47 @@ end
     })
 
 
+    FarmTab:AddToggle({
+        Name = "Auto Enter Dungeon Of Anniversary",
+        Default = false,
+        Callback = function(Value)
+            getgenv().autoDgAn = Value
+            autoDgAn()
+        end    
+    })
+
+    
+
+
+    local MiscTab = Window:MakeTab({
+        Name = "Shop",
+        Icon = "rbxassetid://4483345998",
+        PremiumOnly = false
+    })
+    
+
+    MiscTab:AddToggle({
+        Name = "Auto Buy Ticket",
+        Default = false,
+        Callback = function(Value)
+            getgenv().autoTicket = Value
+            autoTicket()
+        end    
+    }) 
+
+
+
+    MiscTab:AddToggle({
+        Name = "Auto Summon",
+        Default = false,
+        Callback = function(Value)
+            getgenv().autoSummon = Value
+            autoSummon()
+        end    
+    })  
+
+
+
 
     local MiscTab = Window:MakeTab({
         Name = "Misc",
@@ -248,13 +321,7 @@ end
     getgenv().autoSkip = true
     
     getgenv().autoLeave = true
-    
-    getgenv().AutoClaim = true
-    
-    
-    
-    
-    
+
         
         function autoRejoin()
             while getgenv().autoRejoin == true do
@@ -346,23 +413,17 @@ end
     
     end
     end
-    
-    
-    function AutoClaim()
-        while getgenv().AutoClaim == true do
+
+    function autoDgAn()
+        while getgenv().autoDgAn == true do
             wait()
-            game:GetService("ReplicatedStorage").endpoints.client_to_server.claim_battlepass_rewards:InvokeServer()
-    
+            local args = {
+                [1] = "_lobbytemplate_event323"
+            }
+            
+            game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args))
+        end
     end
-    end
-    
-    
-    
-    function autoClaim()
-        game:GetService("ReplicatedStorage").endpoints.client_to_server.claim_battlepass_rewards:InvokeServer()
-    end
-    
-    
     
     
     
@@ -438,9 +499,8 @@ end
                 autoLeave()
             end    
         })
-    
-    
-    
+
+        
         local MiscTab = Window:MakeTab({
             Name = "Misc",
             Icon = "rbxassetid://4483345998",
@@ -454,12 +514,5 @@ end
                 print(Value)
             end    
         })    
-        
-        MiscTab:AddButton({
-            Name = "Claim Btl Rewards",
-            Callback = function()
-                      autoClaim()
-              end    
-        })
-    
-        end
+
+    end
