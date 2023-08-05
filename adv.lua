@@ -270,7 +270,7 @@ function autoSummon()
 
 
     MiscTab:AddToggle({
-        Name = "Auto Summon",
+        Name = "Auto Summon(this auto summon doesn't stop)",
         Default = false,
         Callback = function(Value)
             getgenv().autoSummon = Value
